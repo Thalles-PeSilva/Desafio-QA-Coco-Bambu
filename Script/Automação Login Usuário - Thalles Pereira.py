@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[6]:
+
+
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+import time
+import pandas as pd
+from time import sleep as sl
+
+servico = Service(ChromeDriverManager().install())
+
+navegador = webdriver.Chrome(service=servico)
+
+
+
+# Passo 1: Entrar no navegador
+navegador.get("https://app.cocobambu.com/entrar?backPage=on-boarding%2Fdelivery%3FnextPage%3D%252Fdelivery")
+
+
+navegador.maximize_window()
+
+# passo 2:Inserir E-mail de login
+navegador.find_element('xpath', '//*[@id="username"]/input').send_keys("cocobambu@uorak.com")
+
+
+# passo 3:Inserir Senha de login
+navegador.find_element('xpath', '//*[@id="formUserPass"]/div[3]/ion-input/input').send_keys("Cb61*2023")
+
+# passo 4:Clicar em ENTRAR
+navegador.find_element('xpath', '//*[@id="content"]/app-login/div/div/div[2]/button/span').click()
+
+# passo 5:Clicar em FECHAR dialog de código enviado
+espera1 = (By.XPATH,'/html/body/app-root/ion-app/div/div/desktop-modal/div/email-spam-popup/div/div/base-button/button')
+         
+element = WebDriverWait(navegador, 30).until(EC.element_to_be_clickable(espera1)) 
+element.click()
+
+
+# In[ ]:
+
+
+
+
